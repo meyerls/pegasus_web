@@ -123,6 +123,15 @@ body {
   font-size: 0;
 }
 
+.results-carousel .item-ycb {
+  margin: 5px;
+  overflow: hidden;
+  border: 1px solid #bbb;
+  border-radius: 10px;
+  padding: 0;
+  font-size: 0;
+}
+
 .results-carousel video {
   margin: 0;
 }
