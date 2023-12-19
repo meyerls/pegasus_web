@@ -1,9 +1,14 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="icon" type="image/x-icon" href="https://github.com/meyerls/For5G/raw/master/resources/img.png">
+    <meta property="og:image" content="https://github.com/meyerls/For5G/raw/master/resources/img.png"/>
+    <!-- Facebook automatically scrapes this. Go to https://developers.facebook.com/tools/debug/ if you update and want to force Facebook to rescrape. -->
+    <meta property="og:title"
+          content="PEGASUS"/>
+    <meta property="og:description"
+          content="PEGASUS"/>
     <meta charset="utf-8">
-    <meta name="description"
-          content="PEGASUS">
     <meta name="keywords" content="PEGASUS, Gaussian Splatting, 3DGS">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>PEGASUS: Physical Enhanced Gaussian Splatting Simulation System for 6DOF Object Pose Dataset
@@ -305,7 +310,7 @@
         <h2 class="title is-3 is-centered has-text-centered">Dataset</h2>
         <div class="container ">
             <h4 class="title is-4 is-centered has-text-centered">CupNoodle Dataset</h4>
-            <div id="results-carousel" class="results-carousel columns">
+            <div id="results-carousel" class="results-carousel carousel">
                 <div class="item item-cup_noodles_01">
                     <video poster="" id="cup_noodles_01" autoplay controls muted loop playsinline height="100%">
                         <source src="./static/videos/cup_noodles_01.webm"
@@ -336,8 +341,6 @@
                                 type="video/webm">
                     </video>
                 </div>
-            </div>
-            <div id="results-carousel3" class="results-carousel columns">
                 <div class="item item-cup_noodles_06">
                     <video poster="" id="cup_noodles_06" autoplay controls muted loop playsinline height="100%">
                         <source src="./static/videos/cup_noodles_06.webm"
@@ -368,8 +371,6 @@
                                 type="video/webm">
                     </video>
                 </div>
-            </div>
-            <div id="results-carousel4" class="results-carousel columns">
                 <div class="item item-cup_noodles_11">
                     <video poster="" id="cup_noodles_11" autoplay controls muted loop playsinline height="100%">
                         <source src="./static/videos/cup_noodles_11.webm"
@@ -400,8 +401,6 @@
                                 type="video/webm">
                     </video>
                 </div>
-            </div>
-            <div id="results-carousel5" class="results-carousel columns">
                 <div class="item item-cup_noodles_16">
                     <video poster="" id="cup_noodles_16" autoplay controls muted loop playsinline height="100%">
                         <source src="./static/videos/cup_noodles_16.webm"
@@ -433,7 +432,8 @@
                     </video>
                 </div>
             </div>
-            <h4 class="title is-4 is-centered has-text-centered">Spherical YCB Dataset</h4>
+            <h4 class="title is-4 is-centered has-text-centered"></h4>
+            <h4 class="title is-4 is-centered has-text-centered">YCB Dataset</h4>
             <div id="results-carousel-ycb" class="carousel results-carousel">
                 <div class="item-ycb item-banana">
                     <video poster="" id="banana" autoplay controls muted loop playsinline height="100%">
@@ -548,6 +548,33 @@
     </div>
 </section>
 
+
+
+<section class="hero is-small">
+    <div class="hero-body">
+        <h2 class="title is-3 is-centered has-text-centered">Robotic Task</h2>
+        <div class="container ">
+            <div id="results-carousel" class="results-carousel columns">
+                <div class="item item-10_grasps">
+                    <video poster="" id="10_grasps" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/10_grasps.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item item-multiple_cup_noodles">
+                    <video poster="" id="multiple_cup_noodles" autoplay controls muted loop playsinline height="40%">
+                        <source src="./static/videos/multiple_cup_noodles.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
 <section class="section">
     <div class="container is-max-desktop">
 
@@ -584,11 +611,13 @@
 <section class="section" id="BibTeX">
     <div class="container is-max-desktop content">
         <h2 class="title">BibTeX</h2>
-        <pre><code>@article{meyer2023pegasus,
-  author    = {Meyer, Lukas and Erich, Floris and Yusuke, Yoshiyasu and Stamminger, Marc and Ando, Noriaki and Domae, Yukiyasu},
-  title     = {PEGASUS: Physical Enhanced Gaussian Splatting Simulation System for 6DOF Object Pose Dataset Generation},
-  journal   = {ArXiv},
-  year      = {2023},
+        <pre><code>@Article{PEGASUS2024,
+      author       = {Meyer, Lukas and Erich, Floris and Yoshiyasu, Yusuke and Stamminger, Marc and Ando, Noriaki and Domae, Yukiyasu },
+      title        = {PEGASUS: Physical Enhanced Gaussian Splatting Simulation System for 6DOF Object Pose Dataset Generation},
+      journal      = {ArXiv},
+      month        = {December},
+      year         = {2023},
+      url          = {https://meyerls.github.io/pegasus_web}
 }</code></pre>
     </div>
 </section>
