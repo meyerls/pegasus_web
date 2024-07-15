@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" type="image/x-icon" href="https://github.com/meyerls/For5G/raw/master/resources/img.png">
+    <meta property="og:image" content="https://github.com/meyerls/For5G/raw/master/resources/img.png"/>
+    <!-- Facebook automatically scrapes this. Go to https://developers.facebook.com/tools/debug/ if you update and want to force Facebook to rescrape. -->
+    <meta property="og:title"
+          content="PEGASUS"/>
+    <meta property="og:description"
+          content="PEGASUS"/>
+    <meta charset="utf-8">
+    <meta name="keywords" content="PEGASUS, Gaussian Splatting, 3DGS">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PEGASUS: Physical Enhanced Gaussian Splatting Simulation System for 6DoF Object Pose Dataset
+        Generation</title>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+
+        function gtag() {
+            dataLayer.push(arguments);
+        }
+
+        gtag('js', new Date());
+
+        gtag('config', 'G-PYVRSFMDRL');
+    </script>
+
+    <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+          rel="stylesheet">
+    <script defer src="./static/js/fontawesome.all.min.js"></script>
+
+    <link rel="stylesheet" href="./static/css/bulma.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+    <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+    <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+    <link rel="stylesheet" href="./static/css/index.css">
+    <link rel="icon" href="./static/images/pegasus_eye.png">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="./static/js/bulma-carousel.min.js"></script>
+    <script src="./static/js/bulma-slider.min.js"></script>
+    <script src="./static/js/index.js"></script>
+</head>
+<body>
+
+<!--nav class="navbar" role="navigation" aria-label="main navigation">
+  <div class="navbar-brand">
+    <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false">
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </a>
+  </div>
+  <div class="navbar-menu">
+    <div class="navbar-start" style="flex-grow: 1; justify-content: center;">
+      <a class="navbar-item" href="https://keunhong.com">
+      <span class="icon">
+          <i class="fas fa-home"></i>
+      </span>
+      </a>
+
+      <div class="navbar-item has-dropdown is-hoverable">
+        <a class="navbar-link">
+          More Research
+        </a>
+        <div class="navbar-dropdown">
+          <a class="navbar-item" href="https://hypernerf.github.io">
+            HyperNeRF
+          </a>
+          <a class="navbar-item" href="https://nerfies.github.io">
+            Nerfies
+          </a>
+          <a class="navbar-item" href="https://latentfusion.github.io">
+            LatentFusion
+          </a>
+          <a class="navbar-item" href="https://photoshape.github.io">
+            PhotoShape
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</nav-->
+
+
+<section class="hero">
+    <div class="hero-body">
+        <div class="container is-max-desktop">
+            <div class="columns is-centered">
+                <div class="column has-text-centered">
+                    <h1 class="title is-1 publication-title"><em>PEGASUS</em>: Physical Enhanced Gaussian Splatting
+                        Simulation
+                        System for 6DOF Object Pose Dataset Generation</h1>
+                    <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://meyerls.github.io">Lukas Meyer</a><sup>1</sup>,</span>
+                        <span class="author-block">
+              <a href="https://staff.aist.go.jp/floris.erich/">Floris Erich</a><sup>2</sup>,</span>
+                        <span class="author-block">
+              <a href="https://dblp.org/pid/40/9988.html">Yusuke Yoshiyasu</a><sup>2</sup>,
+            </span>
+                        <span class="author-block">
+              <a href="https://scholar.google.com/citations?hl=de&user=cx4AaqoAAAAJ">Marc Stamminger</a><sup>1</sup>,
+            </span>
+                        <span class="author-block">
+              <a href="https://scholar.google.co.jp/citations?user=dYiMngsAAAAJ&hl=ja">Noriaki Ando</a><sup>2</sup>,
+            </span>
+                        <span class="author-block">
+              <a href="https://researchmap.jp/yukiyasu-domae?lang=en">Yukiyasu Domae</a><sup>2</sup>,
+            </span>
+                    </div>
+
+                    <div class="is-size-5 publication-authors">
+                        <span class="author-block"><sup>1</sup>Visual Computing, Friedrich-Alexander-Universität Erlangen-Nürnberg-Fürth, Germany,</span>
+                        <span class="author-block"><sup>2</sup>Industrial CPS Research Center, National Institute of Advanced Industrial Science and Technology</span>
+                    </div>
+
+                    <div class="column has-text-centered">
+                        <div class="publication-links">
+                            <!-- PDF Link. -->
+                            <span class="link-block">
+                <a href="https://scholar.google.com"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+                            <span class="link-block">
+                <a href="https://scholar.google.com"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+                            <!-- Video Link. -->
+                            <span class="link-block">
+                <a href="https://scholar.google.com"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-youtube"></i>
+                  </span>
+                  <span>Video</span>
+                </a>
+              </span>
+                            <!-- Code Link. -->
+                            <span class="link-block">
+                <a href="https://github.com/meyerls/PEGASUS"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+                            <!-- Dataset Link. -->
+                            <span class="link-block">
+                <a href="https://scholar.google.com"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="far fa-images"></i>
+                  </span>
+                  <span>Data</span>
+                  </a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="hero teaser">
+    <div class="container is-max-desktop">
+        <div class="hero-body">
+            <img id="teaser" src="static/images/title.png" height="100%">
+
+            </img>
+            <h2 class="subtitle has-text-centered">
+                <span class="dnerf"><em>PEGASUS</em></span> composes new scenes and generates multiple data points.
+            </h2>
+        </div>
+    </div>
+</section>
+
+<section class="hero is-light is-small">
+    <div class="hero-body">
+        <div class="container ">
+            <div id="results-carousel2" class="columns">
+                <div class="item item-01">
+                    <video poster="" id="01" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/01.mp4"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item item-02">
+                    <video poster="" id="02" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/02.mp4"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item item-03">
+                    <video poster="" id="03" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/03.mp4"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item item-04">
+                    <video poster="" id="04" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/04.mp4"
+                                type="video/webm">
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="section">
+    <div class="container is-max-desktop">
+        <!-- Abstract. -->
+        <div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+                <h2 class="title is-3">Abstract</h2>
+                <div class="content has-text-justified">
+                    <p>
+                        We introduce Physical Enhanced GAussian Splatting SimUlation System (PEGASUS) for 6DOF object
+                        pose dataset generation, a versatile dataset generator based on 3D Gaussian Splatting.
+                    </p>
+                    <p>
+                        Preparation starts by separate scanning of both environments and objects.
+                        PEGASUS allows the composition of new scenes by merging the respective underlying
+                        Gaussian Splatting point cloud of an environment with one or multiple objects.
+                        Leveraging a physics engine enables the simulation of natural object placement within a scene by
+                        interacting with their extracted mesh.
+                        Consequently, an extensive amount of new scenes - static or dynamic - can be created by
+                        combining different environments and objects.
+                        By rendering scenes from various perspectives, diverse data points such as RGB images, depth
+                        maps, semantic masks, and 6DoF object poses can be extracted.
+                        Our study demonstrates that training on data generated by PEGASUS surpasses the
+                        performance of existing 6DoF pose estimation networks such as deep object pose.
+                    </p>
+                    <p>
+                        Furthermore, our sim-to-real approach validates the successful transfer of tasks from synthetic
+                        data to real-world data.
+                        Moreover, we introduce the CupNoodle dataset, comprising 30 Japanese
+                        cup noodle items.
+                        This dataset includes spherical scans that captures images from both object hemisphere and the
+                        Gaussian Splatting reconstruction, making them compatible with PEGASUS.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!--/ Abstract. -->
+
+        <!-- Paper video. -->
+        <!--div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+                <h2 class="title is-3">Video</h2>
+                <div class="publication-video">
+                    <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
+                            frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div-->
+        <!--/ Paper video. -->
+    </div>
+</section>
+
+
+<section class="section">
+    <div class="container is-max-desktop">
+        <!-- Abstract. -->
+        <div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+                <h2 class="title is-3">Pipeline</h2>
+                <img id="pipeline" src="static/images/pegasus.png" height="100%">
+
+            </div>
+        </div>
+        <!--/ Abstract. -->
+
+        <!-- Paper video. -->
+        <!--div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+                <h2 class="title is-3">Video</h2>
+                <div class="publication-video">
+                    <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
+                            frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div-->
+        <!--/ Paper video. -->
+    </div>
+</section>
+
+<section class="hero is-light is-small">
+    <div class="hero-body">
+        <h2 class="title is-3 is-centered has-text-centered">Dataset</h2>
+        <div class="container ">
+            <h4 class="title is-4 is-centered has-text-centered">CupNoodle Dataset</h4>
+            <div id="results-carousel" class="results-carousel carousel">
+                <div class="item item-cup_noodles_01">
+                    <video poster="" id="cup_noodles_01" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/cup_noodles_01.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item item-cup_noodles_02">
+                    <video poster="" id="cup_noodles_02" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/cup_noodles_02.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item item-cup_noodles_03">
+                    <video poster="" id="cup_noodles_03" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/cup_noodles_03.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item item-cup_noodles_04">
+                    <video poster="" id="cup_noodles_04" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/cup_noodles_04.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item item-cup_noodles_05">
+                    <video poster="" id="cup_noodles_05" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/cup_noodles_05.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item item-cup_noodles_06">
+                    <video poster="" id="cup_noodles_06" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/cup_noodles_06.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item item-cup_noodles_07">
+                    <video poster="" id="cup_noodles_07" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/cup_noodles_07.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item item-cup_noodles_08">
+                    <video poster="" id="cup_noodles_08" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/cup_noodles_08.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item item-cup_noodles_09">
+                    <video poster="" id="cup_noodles_09" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/cup_noodles_09.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item item-cup_noodles_10">
+                    <video poster="" id="cup_noodles_10" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/cup_noodles_10.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item item-cup_noodles_11">
+                    <video poster="" id="cup_noodles_11" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/cup_noodles_11.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item item-cup_noodles_12">
+                    <video poster="" id="cup_noodles_12" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/cup_noodles_12.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item item-cup_noodles_13">
+                    <video poster="" id="cup_noodles_13" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/cup_noodles_13.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item item-cup_noodles_14">
+                    <video poster="" id="cup_noodles_14" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/cup_noodles_14.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item item-cup_noodles_15">
+                    <video poster="" id="cup_noodles_15" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/cup_noodles_15.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item item-cup_noodles_16">
+                    <video poster="" id="cup_noodles_16" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/cup_noodles_16.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item item-cup_noodles_17">
+                    <video poster="" id="cup_noodles_17" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/cup_noodles_17.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item item-cup_noodles_18">
+                    <video poster="" id="cup_noodles_18" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/cup_noodles_18.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item item-cup_noodles_19">
+                    <video poster="" id="cup_noodles_19" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/cup_noodles_19.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item item-cup_noodles_20">
+                    <video poster="" id="cup_noodles_20" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/cup_noodles_20.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+            </div>
+            <h4 class="title is-4 is-centered has-text-centered"></h4>
+            <h4 class="title is-4 is-centered has-text-centered">YCB Dataset</h4>
+            <div id="results-carousel-ycb" class="carousel results-carousel">
+                <div class="item-ycb item-banana">
+                    <video poster="" id="banana" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/banana.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item-ycb itemchoco_jello">
+                    <video poster="" id="choco_jello" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/choco_jello.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item-ycb item-cracker_box">
+                    <video poster="" id="cracker_box" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/cracker_box.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item-ycb item-domino_sugar">
+                    <video poster="" id="domino_sugar" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/domino_sugar.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item-ycb item-foam_brick">
+                    <video poster="" id="foam_brick" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/foam_brick.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item-ycb item-maxwell_coffee">
+                    <video poster="" id="maxwell_coffee" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/maxwell_coffee.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item-ycb item-pen">
+                    <video poster="" id="pen" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/pen.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item-ycb item-pitcher">
+                    <video poster="" id="pitcher" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/pitcher.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item-ycb item-red_bowl">
+                    <video poster="" id="red_bowl" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/red_bowl.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item-ycb item-red_cup">
+                    <video poster="" id="red_cup" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/red_cup.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item-ycb item-scissors">
+                    <video poster="" id="scissors" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/scissors.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item-ycb item-soft_srub">
+                    <video poster="" id="soft_srub" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/soft_srub.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item-ycb item-spam">
+                    <video poster="" id="spam" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/spam.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item-ycb item-strawberry_jello">
+                    <video poster="" id="strawberry_jello" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/strawberry_jello.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item-ycb item-tomato_soup">
+                    <video poster="" id="tomato_soup" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/tomato_soup.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item-ycb item-tuna">
+                    <video poster="" id="tuna" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/tuna.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item-ycb item-wooden_block">
+                    <video poster="" id="wooden_block" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/wooden_block.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item-ycb item-yellow_mustard">
+                    <video poster="" id="yellow_mustard" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/yellow_mustard.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<section class="hero is-small">
+    <div class="hero-body">
+        <h2 class="title is-3 is-centered has-text-centered">Robotic Task</h2>
+        <div class="container ">
+            <div id="results-carousel" class="results-carousel columns">
+                <div class="item item-10_grasps">
+                    <video poster="" id="10_grasps" autoplay controls muted loop playsinline height="100%">
+                        <source src="./static/videos/10_grasps.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+                <div class="item item-multiple_cup_noodles">
+                    <video poster="" id="multiple_cup_noodles" autoplay controls muted loop playsinline height="40%">
+                        <source src="./static/videos/multiple_cup_noodles.webm"
+                                type="video/webm">
+                    </video>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<section class="section">
+    <div class="container is-max-desktop">
+
+        <div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+                <h2 class="title is-3">Acknowledgements</h2>
+                <div class="content has-text-justified">
+                    <p>
+                        We extend our sincere gratitude to <b>Abdullah Mustafa</b> for his valuable feedback and to <b>Toshio
+                        Ueshiba</b> for his extensive expertise in UR5. This research has been supported by the New
+                        Energy and Industrial Technology Development Organization (NEDO), under the project ID
+                        JPNP20016.
+                    </p>
+                </div>
+            </div>
+        </div>
+        <!--/ Abstract. -->
+
+        <!-- Paper video. -->
+        <!--div class="columns is-centered has-text-centered">
+            <div class="column is-four-fifths">
+                <h2 class="title is-3">Video</h2>
+                <div class="publication-video">
+                    <iframe src="https://www.youtube.com/embed/MrKrnHhk8IA?rel=0&amp;showinfo=0"
+                            frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div-->
+        <!--/ Paper video. -->
+    </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+    <div class="container is-max-desktop content">
+        <h2 class="title">BibTeX</h2>
+        <pre><code>@Article{PEGASUS2024,
+      author       = {Meyer, Lukas and Erich, Floris and Yoshiyasu, Yusuke and Stamminger, Marc and Ando, Noriaki and Domae, Yukiyasu },
+      title        = {PEGASUS: Physical Enhanced Gaussian Splatting Simulation System for 6DOF Object Pose Dataset Generation},
+      journal      = {ArXiv},
+      month        = {December},
+      year         = {2023},
+      url          = {https://meyerls.github.io/pegasus_web}
+}</code></pre>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="container">
+        <div class="content has-text-centered">
+            <a class="icon-link"
+               href="http://scholar.google.comf">
+                <i class="fas fa-file-pdf"></i>
+            </a>
+            <a class="icon-link" href="https://github.com/meyerls" class="external-link" disabled>
+                <i class="fab fa-github"></i>
+            </a>
+        </div>
+        <div class="columns is-centered">
+            <div class="column is-8">
+                <div class="content">
+                    <p>
+                        This website is licensed under a <a rel="license"
+                                                            href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+                        Commons Attribution-ShareAlike 4.0 International License</a>.
+                    </p>
+                    <p>
+                        The source code of this website is borrowed from <a
+                            href="https://github.com/nerfies/nerfies.github.io">nerfies</a>.
+                        We thank the authors for sharing the template.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+</body>
+</html>
